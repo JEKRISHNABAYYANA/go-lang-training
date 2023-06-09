@@ -1,9 +1,0 @@
-package math
-
-//var Classcount int = 10
-//var Name string = "je krishna"
-
-func Divison(no1 int, no2 int) (int, int, int, int) {
-	//fmt.Println(no1 / no2)
-	return no1, no2, no1 / no2, no1 % no2
-}
