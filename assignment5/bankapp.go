@@ -6,7 +6,7 @@ import (
 
 type Customer struct {
 	accountNumber int
-	name          string
+	customername  string
 	balance       float64
 }
 
@@ -17,7 +17,7 @@ type Bank struct {
 func (bank *Bank) addCustomer(accountNumber int, name string, balance float64) {
 	newCustomer := Customer{
 		accountNumber: accountNumber,
-		name:          name,
+		customername:  name,
 		balance:       balance,
 	}
 	bank.customers = append(bank.customers, newCustomer)
@@ -29,7 +29,7 @@ func (bank *Bank) totalCustomers() int {
 
 func (bank *Bank) printAllCustomers() {
 	for _, customer := range bank.customers {
-		fmt.Printf("Account Number: %d, Name: %s, Balance: %.2f\n", customer.accountNumber, customer.name, customer.balance)
+		fmt.Printf("Account Number: %d, Customer Name: %s, Balance: %.2f\n", customer.accountNumber, customer.customername, customer.balance)
 	}
 }
 
@@ -48,7 +48,7 @@ func (customer *Customer) deposit(amount float64) {
 }
 
 func (customer *Customer) printBalance() {
-	fmt.Printf("Account Number: %d, Name: %s, Balance: %.2f\n", customer.accountNumber, customer.name, customer.balance)
+	fmt.Printf("Account Number: %d, Name: %s, Balance: %.2f\n", customer.accountNumber, customer.customername, customer.balance)
 }
 
 func (bank *Bank) closeAccount(accountNumber int) {
@@ -66,8 +66,10 @@ func main() {
 	bank := Bank{}
 
 	// Adding customers
-	bank.addCustomer(1, "John Doe", 1000.0)
-	bank.addCustomer(2, "Jane Smith", 5000.0)
+	bank.addCustomer(1, "ram", 1000.0)
+	bank.addCustomer(2, "hari", 5000.0)
+	bank.addCustomer(3, "sai", 10000.0)
+	bank.addCustomer(4, "siva", 15000.0)
 
 	// Print total number of customers
 	fmt.Println("Total Customers:", bank.totalCustomers())
@@ -84,6 +86,16 @@ func main() {
 
 	customer.withdraw(500.0)
 	customer.deposit(1000.0)
+	customer.printBalance()
+
+	accountNumber = 3
+	customer = bank.customers[accountNumber-1]
+
+	fmt.Println("----- Account Operations -----")
+	customer.printBalance()
+
+	customer.withdraw(200.0)
+	customer.deposit(500.0)
 	customer.printBalance()
 
 	bank.closeAccount(accountNumber)

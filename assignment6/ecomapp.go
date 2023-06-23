@@ -6,9 +6,10 @@ import (
 )
 
 type Item struct {
-	ID    int
-	Name  string
-	Price float64
+	ID       int
+	Product  string
+	Cost     float64
+	Quantity int
 }
 
 type Inventory struct {
@@ -37,21 +38,21 @@ func (app *EcommerceApp) AddToCart(item Item, amount int) {
 func (app *EcommerceApp) CalculateTotalBill() float64 {
 	total := 0.0
 	for _, cartItem := range app.Cart.Items {
-		total += cartItem.Item.Price * float64(cartItem.Amount)
+		total += cartItem.Item.Cost * float64(cartItem.Amount)
 	}
 	return total
 }
 
 func (app *EcommerceApp) ListAllItems() {
-	fmt.Println("----- Items Available -----")
+	fmt.Println(" Items Available :->")
 	for _, item := range app.Inventory.Items {
-		fmt.Printf("ID: %d | Name: %s | Price: %.2f\n", item.ID, item.Name, item.Price)
+		fmt.Printf("ID: %d , Product: %s , Quantity: %d, Cost: %.2f\n", item.ID, item.Product, item.Quantity, item.Cost)
 	}
-	fmt.Println("---------------------------")
+
 }
 
 func (app *EcommerceApp) SearchItems(query string) {
-	fmt.Println("----- Search Results -----")
+	fmt.Println(" Search Results :->")
 	regex, err := regexp.Compile(query)
 	if err != nil {
 		fmt.Println("Invalid regular expression:", err)
@@ -59,21 +60,21 @@ func (app *EcommerceApp) SearchItems(query string) {
 	}
 
 	for _, item := range app.Inventory.Items {
-		if regex.MatchString(item.Name) {
-			fmt.Printf("ID: %d | Name: %s | Price: %.2f\n", item.ID, item.Name, item.Price)
+		if regex.MatchString(item.Product) {
+			fmt.Printf("ID: %d , Product: %s ,Quantity: %d, Cost: %.2f\n", item.ID, item.Product, item.Quantity, item.Cost)
 		}
 	}
-	fmt.Println("--------------------------")
+
 }
 
 func main() {
 	app := EcommerceApp{
 		Inventory: Inventory{
 			Items: []Item{
-				{ID: 1, Name: "Shirt", Price: 25.99},
-				{ID: 2, Name: "Jeans", Price: 39.99},
-				{ID: 3, Name: "Shoes", Price: 59.99},
-				{ID: 4, Name: "Hat", Price: 14.99},
+				{ID: 1, Product: "Shirt", Quantity: 1, Cost: 66.99},
+				{ID: 2, Product: "Trousers", Quantity: 1, Cost: 77.99},
+				{ID: 3, Product: "Shoes", Quantity: 1, Cost: 88.99},
+				{ID: 4, Product: "Hat", Quantity: 1, Cost: 19.99},
 			},
 		},
 		Cart: Cart{},
@@ -84,5 +85,5 @@ func main() {
 	app.AddToCart(app.Inventory.Items[2], 1)
 	fmt.Println("Cart Total:", app.CalculateTotalBill())
 
-	app.SearchItems("Sh")
+	app.SearchItems("Ha")
 }
